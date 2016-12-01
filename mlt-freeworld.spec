@@ -1,6 +1,6 @@
 Name:           mlt-freeworld
-Version:        6.2.0
-Release:        3%{?dist}
+Version:        6.4.1
+Release:        1%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
@@ -93,6 +93,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Thu Dec 01 2016 Sérgio Basto <sergio@serjux.com> - 6.4.1-1
+- New upstream vesion, 6.4.1
+
 * Sun Aug 28 2016 Sérgio Basto <sergio@serjux.com> - 6.2.0-3
 - Initial version of freeworld
 
