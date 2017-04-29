@@ -1,6 +1,6 @@
 Name:           mlt-freeworld
 Version:        6.4.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
@@ -93,6 +93,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Sat Apr 29 2017 Leigh Scott <leigh123linux@googlemail.com> - 6.4.1-3
+- Rebuild for ffmpeg update
+
 * Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 6.4.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
