@@ -1,6 +1,6 @@
 Name:           mlt-freeworld
 Version:        6.4.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
@@ -62,6 +62,10 @@ sed -i -e '/ffast-math/d' configure
 # be sure that aren't used
 rm -r src/win32/
 
+%if 0%{?fedora} >= 25
+# xlocale.h is gone in F26
+sed -r -i 's/#include <xlocale.h>/#include <locale.h>/' src/framework/mlt_property.h
+%endif
 
 %build
 #export STRIP=/bin/true
@@ -93,6 +97,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Fri Sep 01 2017 Leigh Scott <leigh123linux@googlemail.com> - 6.4.1-5
+- Add xlocale.h fix from fedora mlt
+
 * Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 6.4.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
