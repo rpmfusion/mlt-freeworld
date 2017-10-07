@@ -51,7 +51,7 @@ tools, xml authoring components, and an extendible plug-in based API.
 
 
 %prep
-%autosetup -p1 -n %{name}-6.4.1
+%autosetup -p1 -n mlt-6.4.1
 
 chmod 644 src/modules/qt/kdenlivetitle_wrapper.cpp
 chmod 644 src/modules/kdenlive/filter_freeze.c
