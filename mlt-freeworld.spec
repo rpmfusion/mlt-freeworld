@@ -1,17 +1,18 @@
 Name:           mlt-freeworld
-Version:        6.4.1
-Release:        5%{?dist}
+Version:        6.5.0
+Release:        0.1%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
 URL:            http://www.mltframework.org/twiki/bin/view/MLT/
 Group:          System Environment/Libraries
-Source0:        https://github.com/mltframework/mlt/archive/v%{version}/mlt-%{version}.tar.gz
+Source0:        https://github.com/mltframework/mlt/archive/v6.4.1/mlt-6.4.1.tar.gz
+Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...6c41f2b0c72932470554f272d4cde8e8cc0dce3b.diff
 
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qt3d-devel
-BuildRequires:  SDL-devel
-BuildRequires:  SDL_image-devel
+BuildRequires:  SDL2-devel
+BuildRequires:  SDL2_image-devel
 BuildRequires:  gtk2-devel
 BuildRequires:  jack-audio-connection-kit-devel
 BuildRequires:  libogg-devel
@@ -31,6 +32,8 @@ BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  libquicktime-devel
 BuildRequires:  xine-lib-devel
+BuildRequires:  alsa-lib-devel
+BuildRequires:  movit-devel
 
 Requires:  mlt = %{version}
 
@@ -48,7 +51,7 @@ tools, xml authoring components, and an extendible plug-in based API.
 
 
 %prep
-%setup -q -n mlt-%{version}
+%autosetup -p1 -n %{name}-6.4.1
 
 chmod 644 src/modules/qt/kdenlivetitle_wrapper.cpp
 chmod 644 src/modules/kdenlive/filter_freeze.c
@@ -62,10 +65,6 @@ sed -i -e '/ffast-math/d' configure
 # be sure that aren't used
 rm -r src/win32/
 
-%if 0%{?fedora} >= 25
-# xlocale.h is gone in F26
-sed -r -i 's/#include <xlocale.h>/#include <locale.h>/' src/framework/mlt_property.h
-%endif
 
 %build
 #export STRIP=/bin/true
@@ -84,6 +83,8 @@ sed -r -i 's/#include <xlocale.h>/#include <locale.h>/' src/framework/mlt_proper
 
 %install
 %make_install
+#before remove it print it to check with main mlt package
+find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so"
 # remove all execept avformat (ffmpeg part)
 find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so" | xargs rm
 find %{buildroot} -type l -delete
@@ -97,6 +98,10 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Sat Oct 07 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.1
+- Update to 6.5.0 pre-version and switch to SDL2
+- Enable movit support
+
 * Fri Sep 01 2017 Leigh Scott <leigh123linux@googlemail.com> - 6.4.1-5
 - Add xlocale.h fix from fedora mlt
 
