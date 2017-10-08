@@ -1,6 +1,6 @@
 Name:           mlt-freeworld
 Version:        6.5.0
-Release:        0.1%{?dist}
+Release:        0.2%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
@@ -9,6 +9,8 @@ Group:          System Environment/Libraries
 Source0:        https://github.com/mltframework/mlt/archive/v6.4.1/mlt-6.4.1.tar.gz
 Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...6c41f2b0c72932470554f272d4cde8e8cc0dce3b.diff
 
+BuildRequires:  frei0r-devel
+BuildRequires:  opencv-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qt3d-devel
 BuildRequires:  SDL2-devel
@@ -24,7 +26,6 @@ BuildRequires:  libsamplerate-devel
 BuildRequires:  ladspa-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  sox-devel
-BuildRequires:  swig
 BuildRequires:  freetype-devel
 BuildRequires:  libexif-devel
 BuildRequires:  fftw-devel
@@ -84,7 +85,7 @@ rm -r src/win32/
 %install
 %make_install
 #before remove it print it to check with main mlt package
-find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so"
+find %{buildroot} | grep -vP "mlt/avformat|libmltavformat.so"
 # remove all execept avformat (ffmpeg part)
 find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so" | xargs rm
 find %{buildroot} -type l -delete
@@ -98,6 +99,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Sun Oct 08 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.2
+- Sync with fedora proper
+
 * Sat Oct 07 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.1
 - Update to 6.5.0 pre-version and switch to SDL2
 - Enable movit support
