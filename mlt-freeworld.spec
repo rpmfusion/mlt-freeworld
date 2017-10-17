@@ -1,6 +1,6 @@
 Name:           mlt-freeworld
 Version:        6.5.0
-Release:        0.2%{?dist}
+Release:        0.3%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
@@ -99,6 +99,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Tue Oct 17 2017 Leigh Scott <leigh123linux@googlemail.com> - 6.5.0-0.3
+- Rebuild for ffmpeg update
+
 * Sun Oct 08 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.2
 - Sync with fedora proper
 
