@@ -1,13 +1,19 @@
+#globals for https://github.com/mltframework/mlt/commit/ddc40aa1cf0c412e3422f2b65782cf14ab191879
+%global gitdate 20171105
+%global commit ddc40aa1cf0c412e3422f2b65782cf14ab191879
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global gver .%{gitdate}git%{shortcommit}
+
 Name:           mlt-freeworld
 Version:        6.5.0
-Release:        0.3%{?dist}
+Release:        0.4%{?gver}%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
 URL:            http://www.mltframework.org/twiki/bin/view/MLT/
 Group:          System Environment/Libraries
 Source0:        https://github.com/mltframework/mlt/archive/v6.4.1/mlt-6.4.1.tar.gz
-Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...6c41f2b0c72932470554f272d4cde8e8cc0dce3b.diff
+Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...%{commit}.diff
 
 BuildRequires:  frei0r-devel
 BuildRequires:  opencv-devel
@@ -99,6 +105,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Sun Nov 05 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.4.20171105gitddc40aa
+- Update snapshot
+
 * Tue Oct 17 2017 Leigh Scott <leigh123linux@googlemail.com> - 6.5.0-0.3
 - Rebuild for ffmpeg update
 
