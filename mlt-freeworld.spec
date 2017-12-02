@@ -10,7 +10,7 @@ Release:        0.5%{?gver}%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
-URL:            http://www.mltframework.org/twiki/bin/view/MLT/
+URL:            http://www.mltframework.org/
 Group:          System Environment/Libraries
 Source0:        https://github.com/mltframework/mlt/archive/v6.4.1/mlt-6.4.1.tar.gz
 Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...%{commit}.diff
