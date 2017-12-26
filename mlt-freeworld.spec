@@ -1,12 +1,12 @@
-#globals for https://github.com/mltframework/mlt/commit/73bfefdef9eb666629acf25bee1b587abc4bbcad
-%global gitdate 20171114
-%global commit 73bfefdef9eb666629acf25bee1b587abc4bbcad
+#globals for https://github.com/mltframework/mlt/commit/ea973eb65c8ca79a859028a9e008360836ca4941
+%global gitdate 20171213
+%global commit ea973eb65c8ca79a859028a9e008360836ca4941
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global gver .%{gitdate}git%{shortcommit}
 
 Name:           mlt-freeworld
 Version:        6.5.0
-Release:        0.5%{?gver}%{?dist}
+Release:        0.6%{?gver}%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
@@ -105,6 +105,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Sun Dec 24 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.6.20171213gitea973eb
+- Update snapshot
+
 * Fri Nov 17 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.5.20171114git73bfefd
 - Update snapshot
 
