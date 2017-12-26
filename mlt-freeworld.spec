@@ -41,6 +41,7 @@ BuildRequires:  libquicktime-devel
 BuildRequires:  xine-lib-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  movit-devel
+BuildRequires:  vid.stab-devel
 
 Requires:  mlt = %{version}
 
@@ -107,6 +108,7 @@ find %{buildroot} -type d -empty -delete
 %changelog
 * Sun Dec 24 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.6.20171213gitea973eb
 - Update snapshot
+- Add vid.stab support
 
 * Fri Nov 17 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.5.20171114git73bfefd
 - Update snapshot
