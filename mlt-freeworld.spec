@@ -37,7 +37,8 @@ BuildRequires:  libexif-devel
 BuildRequires:  fftw-devel
 BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  ffmpeg-devel
-BuildRequires:  libquicktime-devel
+# libquicktime is FTBFS with ffmpep-3.5
+#BuildRequires:  libquicktime-devel
 BuildRequires:  xine-lib-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  movit-devel
@@ -108,6 +109,7 @@ find %{buildroot} -type d -empty -delete
 %changelog
 * Thu Jan 18 2018 Leigh Scott <leigh123linux@googlemail.com> - 6.5.0-0.7.20171213gitea973eb
 - Rebuilt for ffmpeg-3.5 git
+- libquicktime is FTBFS with ffmpep-3.5
 
 * Sun Dec 24 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.6.20171213gitea973eb
 - Update snapshot
