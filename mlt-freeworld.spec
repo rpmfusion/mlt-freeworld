@@ -6,7 +6,7 @@
 
 Name:           mlt-freeworld
 Version:        6.5.0
-Release:        0.6%{?gver}%{?dist}
+Release:        0.7%{?gver}%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 License:        GPLv3 and LGPLv2+
@@ -106,6 +106,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Thu Jan 18 2018 Leigh Scott <leigh123linux@googlemail.com> - 6.5.0-0.7.20171213gitea973eb
+- Rebuilt for ffmpeg-3.5 git
+
 * Sun Dec 24 2017 Sérgio Basto <sergio@serjux.com> - 6.5.0-0.6.20171213gitea973eb
 - Update snapshot
 - Add vid.stab support
