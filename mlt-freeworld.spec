@@ -2,18 +2,20 @@
 %global gitdate 20171213
 %global commit ea973eb65c8ca79a859028a9e008360836ca4941
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global gver .%{gitdate}git%{shortcommit}
+#global gver .%{gitdate}git%{shortcommit}
 
 Name:           mlt-freeworld
-Version:        6.5.0
-Release:        0.7%{?gver}%{?dist}
+Version:        6.6.0
+Release:        1%{?gver}%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
+# mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
+# but is not used in Linux
 License:        GPLv3 and LGPLv2+
 URL:            http://www.mltframework.org/
 Group:          System Environment/Libraries
-Source0:        https://github.com/mltframework/mlt/archive/v6.4.1/mlt-6.4.1.tar.gz
-Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...%{commit}.diff
+Source0:        https://github.com/mltframework/mlt/archive/v%{version}/%{name}-%{version}.tar.gz
+#Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...%{commit}.diff
 
 BuildRequires:  frei0r-devel
 BuildRequires:  opencv-devel
@@ -36,11 +38,11 @@ BuildRequires:  freetype-devel
 BuildRequires:  libexif-devel
 BuildRequires:  fftw-devel
 BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  ffmpeg-devel
-BuildRequires:  xine-lib-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  movit-devel
 BuildRequires:  vid.stab-devel
+BuildRequires:  ffmpeg-devel
+BuildRequires:  xine-lib-devel
 
 Requires:  mlt = %{version}
 
@@ -48,17 +50,17 @@ Requires:  mlt = %{version}
 MLT was packaged in Fedora proper without ffmpeg support , this package give us
 the freeworld part of the package, is just for F25+ and epel7 .
 
-MLT is an open source multimedia framework, designed and developed for 
+MLT is an open source multimedia framework, designed and developed for
 television broadcasting.
 
-It provides a toolkit for broadcasters, video editors,media players, 
-transcoders, web streamers and many more types of applications. The 
-functionality of the system is provided via an assortment of ready to use 
+It provides a toolkit for broadcasters, video editors,media players,
+transcoders, web streamers and many more types of applications. The
+functionality of the system is provided via an assortment of ready to use
 tools, xml authoring components, and an extendible plug-in based API.
 
 
 %prep
-%autosetup -p1 -n mlt-6.4.1
+%autosetup -p1 -n %{name}-%{version}
 
 chmod 644 src/modules/qt/kdenlivetitle_wrapper.cpp
 chmod 644 src/modules/kdenlive/filter_freeze.c
@@ -105,6 +107,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Thu Jan 25 2018 Sérgio Basto <sergio@serjux.com> - 6.6.0-1
+- Update to 6.6.0
+
 * Thu Jan 18 2018 Leigh Scott <leigh123linux@googlemail.com> - 6.5.0-0.7.20171213gitea973eb
 - Rebuilt for ffmpeg-3.5 git
 - MLT doesn't needs or use libquicktime
@@ -155,10 +160,10 @@ find %{buildroot} -type d -empty -delete
 - Drop backport patch.
 
 * Sun Feb 21 2016 Sérgio Basto <sergio@serjux.com> - 6.0.0-2
-- Add license tag. 
+- Add license tag.
 - More spec modernizations and rpmlint fixes.
 - Configure conditional build for Ruby.
-- Remove old BuilRequires that aren't needed anymore. 
+- Remove old BuilRequires that aren't needed anymore.
 - Remove old config options (avformat-swscale and qimage-libdir) that no longer
   exist in configure.
 - Fix Ruby build.
@@ -207,8 +212,8 @@ find %{buildroot} -type d -empty -delete
 * Wed Nov 20 2013 Sérgio Basto <sergio@serjux.com> - 0.9.0-2
 - Enable gplv3 as asked in rfbz #3040
 - Fix a changelog date.
-- Fix Ruby warning with rpmbuild "Use RbConfig instead of obsolete and deprecated Config". 
-- Remove obsolete tag %%clean and rm -rf 
+- Fix Ruby warning with rpmbuild "Use RbConfig instead of obsolete and deprecated Config".
+- Remove obsolete tag %%clean and rm -rf
 
 * Mon Oct 07 2013 Sérgio Basto <sergio@serjux.com> - 0.9.0-1
 - Update to 0.9.0
