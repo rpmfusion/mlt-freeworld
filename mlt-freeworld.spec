@@ -4,6 +4,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 #global gver .%{gitdate}git%{shortcommit}
 
+%global realname mlt
+
 Name:           mlt-freeworld
 Version:        6.6.0
 Release:        1%{?gver}%{?dist}
@@ -14,7 +16,7 @@ Summary:        Toolkit for broadcasters, video editors, media players, transcod
 License:        GPLv3 and LGPLv2+
 URL:            http://www.mltframework.org/
 Group:          System Environment/Libraries
-Source0:        https://github.com/mltframework/mlt/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/mltframework/mlt/archive/v%{version}/%{realname}-%{version}.tar.gz
 #Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...%{commit}.diff
 
 BuildRequires:  frei0r-devel
@@ -60,7 +62,7 @@ tools, xml authoring components, and an extendible plug-in based API.
 
 
 %prep
-%autosetup -p1 -n %{name}-%{version}
+%autosetup -p1 -n %{realname}-%{version}
 
 chmod 644 src/modules/qt/kdenlivetitle_wrapper.cpp
 chmod 644 src/modules/kdenlive/filter_freeze.c
