@@ -7,7 +7,7 @@
 %global realname mlt
 
 Name:           mlt-freeworld
-Version:        6.8.0
+Version:        6.10.0
 Release:        1%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
@@ -109,6 +109,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Tue Jul 03 2018 Sérgio Basto <sergio@serjux.com> - 6.10.0-1
+- Update to 6.10.0
+
 * Sun May 13 2018 Sérgio Basto <sergio@serjux.com> - 6.8.0-1
 - Update to 6.8.0 (as in Fedora proper)
 
