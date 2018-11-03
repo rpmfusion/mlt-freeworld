@@ -1,0 +1,13 @@
+diff --git a/src/mlt++/MltRepository.cpp b/src/mlt++/MltRepository.cpp
+index 47a598bc..45522e40 100644
+--- a/src/mlt++/MltRepository.cpp
++++ b/src/mlt++/MltRepository.cpp
+@@ -35,8 +35,6 @@ Repository::Repository( mlt_repository repository ) :
+ 
+ Repository::~Repository( )
+ {
+-	if ( instance )
+-		mlt_repository_close( instance );
+ 	instance = NULL;
+ }
+ 
