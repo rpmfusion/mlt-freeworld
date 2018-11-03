@@ -1,13 +1,19 @@
 Name:           mlt-freeworld
 Version:        6.4.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
+# mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
+# but is not used in Linux
 License:        GPLv3 and LGPLv2+
-URL:            http://www.mltframework.org/twiki/bin/view/MLT/
+URL:            http://www.mltframework.org/
 Group:          System Environment/Libraries
 Source0:        https://github.com/mltframework/mlt/archive/v%{version}/mlt-%{version}.tar.gz
+Patch1:         a3188e301b5a9a1f25dbb98a510e366363348e64.diff
 
+BuildRequires:  frei0r-devel
+BuildRequires:  opencv-devel
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qt3d-devel
 BuildRequires:  SDL-devel
@@ -23,13 +29,25 @@ BuildRequires:  libsamplerate-devel
 BuildRequires:  ladspa-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  sox-devel
+%if 0%{?fedora} >= 25
+# verion 3.0.11 needed for php7 IIRC
+BuildRequires:  swig >= 3.0.11
+%else
 BuildRequires:  swig
+%endif
+BuildRequires:  python2-devel
 BuildRequires:  freetype-devel
 BuildRequires:  libexif-devel
 BuildRequires:  fftw-devel
 BuildRequires:  pulseaudio-libs-devel
+BuildRequires:  alsa-lib-devel
+BuildRequires:  vid.stab-devel
+%if 0%{?fedora} >= 25
+BuildRequires:  movit-devel
+%endif
+BuildRequires:  eigen3-devel
+BuildRequires:  libebur128-devel
 BuildRequires:  ffmpeg-devel
-BuildRequires:  libquicktime-devel
 BuildRequires:  xine-lib-devel
 
 Requires:  mlt = %{version}
@@ -38,17 +56,17 @@ Requires:  mlt = %{version}
 MLT was packaged in Fedora proper without ffmpeg support , this package give us
 the freeworld part of the package, is just for F25+ and epel7 .
 
-MLT is an open source multimedia framework, designed and developed for 
+MLT is an open source multimedia framework, designed and developed for
 television broadcasting.
 
-It provides a toolkit for broadcasters, video editors,media players, 
-transcoders, web streamers and many more types of applications. The 
-functionality of the system is provided via an assortment of ready to use 
+It provides a toolkit for broadcasters, video editors,media players,
+transcoders, web streamers and many more types of applications. The
+functionality of the system is provided via an assortment of ready to use
 tools, xml authoring components, and an extendible plug-in based API.
 
 
 %prep
-%setup -q -n mlt-%{version}
+%autosetup -p1 -n mlt-%{version}
 
 chmod 644 src/modules/qt/kdenlivetitle_wrapper.cpp
 chmod 644 src/modules/kdenlive/filter_freeze.c
@@ -58,13 +76,25 @@ chmod -x demo/demo
 sed -i -e '/fomit-frame-pointer/d' configure
 sed -i -e '/ffast-math/d' configure
 
+sed -i -e 's|qmake|qmake-qt5|' src/modules/qt/configure
+
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
 # be sure that aren't used
 rm -r src/win32/
 
+%if 0%{?fedora} >= 25
+sed -i 's|-php5|-php7|g' src/swig/php/build
+sed -i 's|mlt_wrap.cpp|mlt_wrap.cxx|g' src/swig/php/build
+
+# xlocale.h is gone in F26
+sed -r -i 's/#include <xlocale.h>/#include <locale.h>/' src/framework/mlt_property.h
+%endif
+
 
 %build
 #export STRIP=/bin/true
+CXXFLAGS="-std=c++11 %{optflags}"
+
 %configure \
         --enable-gpl                            \
         --enable-gpl3                            \
@@ -80,7 +110,7 @@ rm -r src/win32/
 
 %install
 %make_install
-# remove all execept avformat (ffmpeg part)
+# remove all except avformat (ffmpeg part)
 find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so" | xargs rm
 find %{buildroot} -type l -delete
 find %{buildroot} -type d -empty -delete
@@ -93,6 +123,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Sat Nov 03 2018 Sérgio Basto <sergio@serjux.com> - 6.4.1-2
+- Sync with Fedora counterpart
+
 * Thu Dec 01 2016 Sérgio Basto <sergio@serjux.com> - 6.4.1-1
 - New upstream vesion, 6.4.1
 
