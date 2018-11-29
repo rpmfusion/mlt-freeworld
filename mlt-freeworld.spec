@@ -2,13 +2,13 @@
 %global gitdate 20171213
 %global commit ea973eb65c8ca79a859028a9e008360836ca4941
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-#global gver .%{gitdate}git%{shortcommit}
+#global gver .%%{gitdate}git%%{shortcommit}
 
 %global realname mlt
 
 Name:           mlt-freeworld
-Version:        6.10.0
-Release:        2%{?dist}
+Version:        6.12.0
+Release:        1%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
@@ -17,7 +17,7 @@ License:        GPLv3 and LGPLv2+
 URL:            http://www.mltframework.org/
 Group:          System Environment/Libraries
 Source0:        https://github.com/mltframework/mlt/archive/v%{version}/%{realname}-%{version}.tar.gz
-#Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...%{commit}.diff
+#Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...%%{commit}.diff
 
 BuildRequires:  frei0r-devel
 BuildRequires:  opencv-devel
@@ -97,7 +97,8 @@ rm -r src/win32/
 #before remove it print it to check with main mlt package
 find %{buildroot} | grep -vP "mlt/avformat|libmltavformat.so"
 # remove all execept avformat (ffmpeg part)
-find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so" | xargs rm
+#find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so" | xargs rm
+find %{buildroot} -type f -print0 | grep -vPz "mlt/avformat|libmltavformat.so" | xargs -0 rm
 find %{buildroot} -type l -delete
 find %{buildroot} -type d -empty -delete
 
@@ -109,6 +110,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Thu Nov 29 2018 Martin Gansser <martinkg@fedoraproject.org> - 6.12.0-1
+- Update to 6.12.0
+
 * Fri Jul 27 2018 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 6.10.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
