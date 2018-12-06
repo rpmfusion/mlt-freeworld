@@ -1,6 +1,6 @@
 Name:           mlt-freeworld
 Version:        6.4.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
