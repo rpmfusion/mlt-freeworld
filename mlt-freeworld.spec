@@ -7,10 +7,10 @@ Summary:        Toolkit for broadcasters, video editors, media players, transcod
 # but is not used in Linux
 License:        GPLv3 and LGPLv2+
 URL:            http://www.mltframework.org/
-Group:          System Environment/Libraries
 Source0:        https://github.com/mltframework/mlt/archive/v%{version}/mlt-%{version}.tar.gz
-Patch1:         a3188e301b5a9a1f25dbb98a510e366363348e64.diff
+Patch1:         mlt-a3188e301b5a9a1f25dbb98a510e366363348e64.patch
 
+BuildRequires:  gcc, gcc-c++
 BuildRequires:  frei0r-devel
 BuildRequires:  opencv-devel
 BuildRequires:  qt5-qtbase-devel
@@ -29,12 +29,7 @@ BuildRequires:  libsamplerate-devel
 BuildRequires:  ladspa-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  sox-devel
-%if 0%{?fedora} >= 25
-# verion 3.0.11 needed for php7 IIRC
-BuildRequires:  swig >= 3.0.11
-%else
 BuildRequires:  swig
-%endif
 BuildRequires:  python2-devel
 BuildRequires:  freetype-devel
 BuildRequires:  libexif-devel
@@ -42,7 +37,7 @@ BuildRequires:  fftw-devel
 BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  vid.stab-devel
-%if 0%{?fedora} >= 25
+%if 0%{?fedora}
 BuildRequires:  movit-devel
 %endif
 BuildRequires:  eigen3-devel
@@ -50,7 +45,7 @@ BuildRequires:  libebur128-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  xine-lib-devel
 
-Requires:  mlt = %{version}
+Requires:  mlt%{?_isa} = %{version}
 
 %description
 MLT was packaged in Fedora proper without ffmpeg support , this package give us
@@ -82,18 +77,18 @@ sed -i -e 's|qmake|qmake-qt5|' src/modules/qt/configure
 # be sure that aren't used
 rm -r src/win32/
 
-%if 0%{?fedora} >= 25
 sed -i 's|-php5|-php7|g' src/swig/php/build
 sed -i 's|mlt_wrap.cpp|mlt_wrap.cxx|g' src/swig/php/build
 
 # xlocale.h is gone in F26
 sed -r -i 's/#include <xlocale.h>/#include <locale.h>/' src/framework/mlt_property.h
-%endif
 
 
 %build
 #export STRIP=/bin/true
-CXXFLAGS="-std=c++11 %{optflags}"
+export CXXFLAGS="-std=c++11 %{optflags}"
+export CC=gcc
+export CXX=g++
 
 %configure \
         --enable-gpl                            \
@@ -115,14 +110,16 @@ find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so" | xargs rm
 find %{buildroot} -type l -delete
 find %{buildroot} -type d -empty -delete
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
 %files
 %{_libdir}/mlt/
 %{_datadir}/mlt/
 
 %changelog
+* Mon Nov 12 2018 Antonio Trande <sagitter@fedoraproject.org> - 6.4.1-3
+- Rebuild for ffmpeg-3.* on el7
+- ld scriptlets removed
+- movit excluded on el7
+
 * Sat Nov 03 2018 Sérgio Basto <sergio@serjux.com> - 6.4.1-2
 - Sync with Fedora counterpart
 
