@@ -100,8 +100,8 @@ rm -r src/win32/
 
 %install
 %make_install
-#before remove it print it to check with main mlt package
-find %{buildroot} | grep -vP "mlt/avformat|libmltavformat.so"
+# Debug before remove, list all files to check with main mlt package
+# find %{buildroot} | grep -vP "mlt/avformat|libmltavformat.so"
 # remove all execept avformat (ffmpeg part)
 #find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so" | xargs rm
 find %{buildroot} -type f -print0 | grep -vPz "mlt/avformat|libmltavformat.so" | xargs -0 rm
