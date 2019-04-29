@@ -7,22 +7,24 @@
 %global realname mlt
 
 Name:           mlt-freeworld
-Version:        6.12.0
-Release:        2%{?dist}
+Version:        6.14.0
+Release:        1%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
 # but is not used in Linux
 License:        GPLv3 and LGPLv2+
 URL:            http://www.mltframework.org/
-Group:          System Environment/Libraries
 Source0:        https://github.com/mltframework/mlt/archive/v%{version}/%{realname}-%{version}.tar.gz
 #Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...%%{commit}.diff
 
 BuildRequires:  frei0r-devel
 BuildRequires:  opencv-devel
+BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qt3d-devel
+BuildRequires:  SDL-devel
+BuildRequires:  SDL_image-devel
 BuildRequires:  SDL2-devel
 BuildRequires:  SDL2_image-devel
 BuildRequires:  gtk2-devel
@@ -41,8 +43,10 @@ BuildRequires:  libexif-devel
 BuildRequires:  fftw-devel
 BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  alsa-lib-devel
-BuildRequires:  movit-devel
 BuildRequires:  vid.stab-devel
+BuildRequires:  movit-devel
+BuildRequires:  eigen3-devel
+BuildRequires:  libebur128-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  xine-lib-devel
 
@@ -71,6 +75,8 @@ chmod -x demo/demo
 # Don't overoptimize (breaks debugging)
 sed -i -e '/fomit-frame-pointer/d' configure
 sed -i -e '/ffast-math/d' configure
+
+sed -i -e 's|qmake|qmake-qt5|' src/modules/qt/configure
 
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
 # be sure that aren't used
@@ -102,14 +108,18 @@ find %{buildroot} -type f -print0 | grep -vPz "mlt/avformat|libmltavformat.so" |
 find %{buildroot} -type l -delete
 find %{buildroot} -type d -empty -delete
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 %files
 %{_libdir}/mlt/
 %{_datadir}/mlt/
 
 %changelog
+* Mon Apr 29 2019 Sérgio Basto <sergio@serjux.com> - 6.14.0-1
+- Update mlt-6.14.0
+- Sync with Fedora
+- Modernize spec
+
 * Mon Mar 04 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 6.12.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
