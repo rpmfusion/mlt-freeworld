@@ -7,8 +7,8 @@
 %global realname mlt
 
 Name:           mlt-freeworld
-Version:        6.16.0
-Release:        2%{?dist}
+Version:        6.18.0
+Release:        1%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
@@ -115,6 +115,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Tue Nov 12 2019 Sérgio Basto <sergio@serjux.com> - 6.18.0-1
+- Update to 6.18.0
+
 * Wed Aug 07 2019 Leigh Scott <leigh123linux@gmail.com> - 6.16.0-2
 - Rebuild for new ffmpeg version
 
