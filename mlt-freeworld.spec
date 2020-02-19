@@ -29,6 +29,7 @@ BuildRequires:  SDL2-devel
 BuildRequires:  SDL2_image-devel
 BuildRequires:  gtk2-devel
 BuildRequires:  jack-audio-connection-kit-devel
+BuildRequires:  libatomic
 BuildRequires:  libogg-devel
 #Deprecated dv, kino, and vorbis modules are not built.
 #https://github.com/mltframework/mlt/commit/9d082192a4d79157e963fd7f491da0f8abab683f
