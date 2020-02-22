@@ -8,7 +8,7 @@
 
 Name:           mlt-freeworld
 Version:        6.20.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
@@ -116,6 +116,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Sat Feb 22 2020 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 6.20.0-2
+- Rebuild for ffmpeg-4.3 git
+
 * Tue Feb 18 2020 Martin Gansser <martinkg@fedoraproject.org> - 6.20.0-1
 - Update to 6.20.0
 
