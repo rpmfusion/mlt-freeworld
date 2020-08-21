@@ -31,10 +31,10 @@ BuildRequires:  gtk2-devel
 BuildRequires:  jack-audio-connection-kit-devel
 BuildRequires:  libatomic
 BuildRequires:  libogg-devel
-#Deprecated dv, kino, and vorbis modules are not built.
+#Deprecated dv and kino modules are not built.
 #https://github.com/mltframework/mlt/commit/9d082192a4d79157e963fd7f491da0f8abab683f
 #BuildRequires:  libdv-devel
-#BuildRequires:  libvorbis-devel
+BuildRequires:  libvorbis-devel
 BuildRequires:  libsamplerate-devel
 BuildRequires:  ladspa-devel
 BuildRequires:  libxml2-devel
@@ -90,11 +90,12 @@ rm -r src/win32/
         --enable-gpl                            \
         --enable-gpl3                            \
         --enable-motion-est                     \
+        --enable-vorbis                     \
 %ifnarch %{ix86} x86_64
         --disable-mmx                           \
         --disable-sse                           \
-        --disable-xine                          \
 %endif
+        --rename-melt=%{name}-melt
 
 %make_build
 
@@ -118,6 +119,7 @@ find %{buildroot} -type d -empty -delete
 %changelog
 * Thu Aug 20 2020 Sérgio Basto <sergio@serjux.com> - 6.22.1-1
 - Update to 6.22.1
+- Sync with Fedora
 
 * Tue Aug 18 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 6.20.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
