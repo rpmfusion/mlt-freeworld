@@ -7,7 +7,7 @@
 %global realname mlt
 
 Name:           mlt-freeworld
-Version:        6.22.1
+Version:        6.24.0
 Release:        1%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
@@ -117,6 +117,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt/
 
 %changelog
+* Sat Dec 26 2020 Sérgio Basto <sergio@serjux.com> - 6.24.0-1
+- Update mlt-freeworld to 6.24.0
+
 * Thu Aug 20 2020 Sérgio Basto <sergio@serjux.com> - 6.22.1-1
 - Update to 6.22.1
 - Sync with Fedora
