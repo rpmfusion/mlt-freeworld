@@ -8,7 +8,7 @@
 
 Name:           mlt-freeworld
 Version:        6.24.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
@@ -24,9 +24,13 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qt3d-devel
 BuildRequires:  SDL-devel
+%if ! (0%{?rhel} >= 8)
 BuildRequires:  SDL_image-devel
+%endif
 BuildRequires:  SDL2-devel
+%if ! (0%{?rhel} >= 8)
 BuildRequires:  SDL2_image-devel
+%endif
 BuildRequires:  gtk2-devel
 BuildRequires:  jack-audio-connection-kit-devel
 BuildRequires:  libatomic
