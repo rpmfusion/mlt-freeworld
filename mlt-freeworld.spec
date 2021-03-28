@@ -123,6 +123,7 @@ find %{buildroot} -type d -empty -delete
 %changelog
 * Wed Feb 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 6.24.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+- On epel8 not BR SDL_images
 
 * Fri Jan  1 2021 Leigh Scott <leigh123linux@gmail.com> - 6.24.0-2
 - Rebuilt for new ffmpeg snapshot
