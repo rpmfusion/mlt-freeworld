@@ -1,3 +1,6 @@
+# needs nonfree/ndi-sdk
+%bcond_with  ndi
+
 #globals for https://github.com/mltframework/mlt/commit/ea973eb65c8ca79a859028a9e008360836ca4941
 %global gitdate 20171213
 %global commit ea973eb65c8ca79a859028a9e008360836ca4941
@@ -7,8 +10,8 @@
 %global realname mlt
 
 Name:           mlt-freeworld
-Version:        6.26.1
-Release:        4%{?dist}
+Version:        7.4.0
+Release:        1%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
@@ -18,17 +21,18 @@ URL:            http://www.mltframework.org/
 Source0:        https://github.com/mltframework/mlt/archive/v%{version}/%{realname}-%{version}.tar.gz
 #Patch0:         https://github.com/mltframework/mlt/compare/v6.4.1...%%{commit}.diff
 
+BuildRequires:  gcc-c++
+BuildRequires:  cmake
+BuildRequires:  sed
 BuildRequires:  frei0r-devel
 BuildRequires:  opencv-devel
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qt3d-devel
 BuildRequires:  SDL-devel
-%if ! (0%{?rhel} >= 8)
-BuildRequires:  SDL_image-devel
-%endif
 BuildRequires:  SDL2-devel
 %if ! (0%{?rhel} >= 8)
+BuildRequires:  SDL_image-devel
 BuildRequires:  SDL2_image-devel
 %endif
 BuildRequires:  gtk2-devel
@@ -58,8 +62,8 @@ BuildRequires:  xine-lib-devel
 Requires:  mlt = %{version}
 
 %description
-MLT was packaged in Fedora proper without ffmpeg support , this package give us
-the freeworld part of the package, is just for F25+ and epel7 .
+MLT is in Fedora proper without ffmpeg support, this package give us
+the ffmpeg support.
 
 MLT is an open source multimedia framework, designed and developed for
 television broadcasting.
@@ -77,50 +81,39 @@ chmod 644 src/modules/qt/kdenlivetitle_wrapper.cpp
 chmod 644 src/modules/kdenlive/filter_freeze.c
 chmod -x demo/demo
 
-# Don't overoptimize (breaks debugging)
-sed -i -e '/fomit-frame-pointer/d' configure
-sed -i -e '/ffast-math/d' configure
-
-sed -i -e 's|qmake|qmake-qt5|' src/modules/qt/configure
-
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
 # be sure that aren't used
 rm -r src/win32/
 
-
 %build
-#export STRIP=/bin/true
-%configure \
-        --enable-gpl                            \
-        --enable-gpl3                            \
-        --enable-motion-est                     \
-        --enable-vorbis                     \
-%ifnarch %{ix86} x86_64
-        --disable-mmx                           \
-        --disable-sse                           \
-%endif
-        --rename-melt=%{name}-melt
+%cmake -DCMAKE_SKIP_RPATH:BOOL=ON           \
+       -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON   \
+       %{?with_ndi: -DMOD_NDI:BOOL=ON -DNDI_SDK_INCLUDE_PATH=%{_includedir}/ndi-sdk -DNDI_SDK_LIBRARY_PATH=%{_libdir} -DNDI_INCLUDE_DIR=%{_includedir}/ndi-sdk -DNDI_LIBRARY_DIR=%{_libdir}}
 
-%make_build
-
+%cmake_build
 
 %install
-%make_install
+%cmake_install
+
 # Debug before remove, list all files to check with main mlt package
 # find %{buildroot} | grep -vP "mlt/avformat|libmltavformat.so"
 # remove all execept avformat (ffmpeg part)
 #find %{buildroot} -type f | grep -vP "mlt/avformat|libmltavformat.so" | xargs rm
-find %{buildroot} -type f -print0 | grep -vPz "mlt/avformat|libmltavformat.so" | xargs -0 rm
+find %{buildroot} -type f -print0 | grep -vPz "mlt-7/avformat|libmltavformat.so|libmltxine.so" | xargs -0 rm
 find %{buildroot} -type l -delete
 find %{buildroot} -type d -empty -delete
 
 %ldconfig_scriptlets
 
 %files
-%{_libdir}/mlt/
-%{_datadir}/mlt/
+%{_libdir}/mlt-7/libmltavformat.so
+%{_libdir}/mlt-7/libmltxine.so
+%{_datadir}/mlt-7/avformat
 
 %changelog
+* Sun Feb 13 2022 Sérgio Basto <sergio@serjux.com> - 7.4.0-1
+- Update to 7.4.0
+
 * Wed Feb 09 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 6.26.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
