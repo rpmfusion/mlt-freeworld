@@ -11,7 +11,7 @@
 
 Name:           mlt-freeworld
 Version:        7.8.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
 # mlt/src/win32/fnmatch.{c,h} are BSD-licensed.
@@ -111,6 +111,10 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt-7/avformat
 
 %changelog
+* Sun Aug 07 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 7.8.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
+  5.1
+
 * Thu Aug 04 2022 Sérgio Basto <sergio@serjux.com> - 7.8.0-1
 - Update mlt-freeworld to 7.8.0
 
