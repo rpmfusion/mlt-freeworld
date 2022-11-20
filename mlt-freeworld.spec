@@ -10,7 +10,7 @@
 %global realname mlt
 
 Name:           mlt-freeworld
-Version:        7.10.0
+Version:        7.12.0
 Release:        1%{?dist}
 Summary:        Toolkit for broadcasters, video editors, media players, transcoders
 
@@ -111,6 +111,9 @@ find %{buildroot} -type d -empty -delete
 %{_datadir}/mlt-7/avformat
 
 %changelog
+* Sun Nov 20 2022 Sérgio Basto <sergio@serjux.com> - 7.12.0-1
+- Update mlt-freeworld to 7.12.0
+
 * Sun Nov 06 2022 Sérgio Basto <sergio@serjux.com> - 7.10.0-1
 - Update mlt-freeworld to 7.10.0
 
