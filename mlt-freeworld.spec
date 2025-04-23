@@ -24,11 +24,9 @@ BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qt3d-devel
 BuildRequires:  SDL-devel
-%if ! (0%{?rhel} >= 8)
-BuildRequires:  SDL_image-devel
-%endif
 BuildRequires:  SDL2-devel
 %if ! (0%{?rhel} >= 8)
+BuildRequires:  SDL_image-devel
 BuildRequires:  SDL2_image-devel
 %endif
 BuildRequires:  gtk2-devel
